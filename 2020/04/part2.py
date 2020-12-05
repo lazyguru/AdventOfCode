@@ -100,13 +100,7 @@ fields = [
             "max_cm": 193,
         },
     },
-    {  # (Hair Color)
-        "id": "hcl",
-        "rules": {
-            "type": regex,
-            "regex": r"#[0-9a-z]{6}"
-        }
-    },
+    {"id": "hcl", "rules": {"type": regex, "regex": r"#[0-9a-z]{6}"}},  # (Hair Color)
     {  # (Eye Color)
         "id": "ecl",
         "rules": {
