@@ -1,0 +1,35 @@
+#!/bin/bash
+YEAR=2020
+DAY=$1
+PART=$2
+if [ -z $DAY ]; then
+    DAY=`TZ=America/New_York date +%d`
+fi
+if [ -z $PART ]; then
+    PART=1
+fi
+# Get aocdl from https://github.com/GreenLightning/advent-of-code-downloader
+DOWNLOAD_SCRIPT="aocdl -year $YEAR -day $DAY -wait &&"
+if [ ! -d ~/code/python/AdventOfCode/$YEAR/$DAY ]; then
+    mkdir -p ~/code/python/AdventOfCode/$YEAR/$DAY
+fi
+cd ~/code/python/AdventOfCode/$YEAR/$DAY
+if [ ! -e part1.py ]; then
+    cat<<EOF > part1.py
+def myfilter(data):
+    return False
+
+lines = []
+with open("input.txt") as input_file:
+    lines = [line for line in input_file]
+
+good = [line[4] for line in lines if myfilter(line)]
+print(len(good))
+EOF
+cp part1.py part2.py
+fi
+tmux new -d -s aoc$YEAR$DAY -x "$(tput cols)" -y "$(tput lines)" "$DOWNLOAD_SCRIPT nvim input.txt"
+tmux split-window -t aoc$YEAR$DAY -h -p 80
+tmux split-window -t aoc$YEAR$DAY -bp 70 nvim part$PART.py
+
+tmux attach -t aoc$YEAR$DAY
