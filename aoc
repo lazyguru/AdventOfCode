@@ -13,6 +13,10 @@ DOWNLOAD_SCRIPT="aocdl -year $YEAR -day $DAY -wait &&"
 if [ ! -d ~/code/python/AdventOfCode/$YEAR/$DAY ]; then
     mkdir -p ~/code/python/AdventOfCode/$YEAR/$DAY
 fi
+cd ~/code/python/AdventOfCode/utils
+source venv/bin/activate
+python scrape.py -y $YEAR -d $DAY -o ../$YEAR/$DAY/puzzle.txt
+deactivate
 cd ~/code/python/AdventOfCode/$YEAR/$DAY
 if [ ! -e part1.py ]; then
     cat<<EOF > part1.py
@@ -33,6 +37,6 @@ cp part1.py part2.py
 fi
 tmux new -d -s aoc$YEAR$DAY -x "$(tput cols)" -y "$(tput lines)" "$DOWNLOAD_SCRIPT nvim input.txt"
 tmux split-window -t aoc$YEAR$DAY -h -p 80
-tmux split-window -t aoc$YEAR$DAY -bp 70 nvim part$PART.py
+tmux split-window -t aoc$YEAR$DAY -bp 70 nvim -p puzzle.txt part$PART.py
 
 tmux attach -t aoc$YEAR$DAY
