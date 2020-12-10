@@ -16,6 +16,9 @@ fi
 cd ~/code/python/AdventOfCode/$YEAR/$DAY
 if [ ! -e part1.py ]; then
     cat<<EOF > part1.py
+import sys
+
+
 def myfilter(data):
     return False
 
@@ -23,7 +26,7 @@ lines = []
 with open("input.txt") as input_file:
     lines = [line for line in input_file]
 
-good = [line[4] for line in lines if myfilter(line)]
+good = [1 for line in lines if myfilter(line)]
 print(len(good))
 EOF
 cp part1.py part2.py
