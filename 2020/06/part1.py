@@ -1,3 +1,6 @@
+import sys
+
+
 def main():
     groups = []
     with open("input.txt") as input_file:
@@ -14,4 +17,5 @@ def main():
     print(sum(count))
 
 
-main()
+if __name__ == "__main__":
+    main(sys.argv[1:])

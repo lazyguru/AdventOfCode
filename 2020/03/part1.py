@@ -1,4 +1,5 @@
 import math
+import sys
 
 
 def myfilter(data):
@@ -18,12 +19,17 @@ def myfilter(data):
     return spot == "#"
 
 
-lines = []
-with open("input.txt") as f:
-    i = 0
-    for line in f:
-        lines.append({"idx": i, "line": line.strip()})
-        i += 1
+def main():
+    lines = []
+    with open("input.txt") as f:
+        i = 0
+        for line in f:
+            lines.append({"idx": i, "line": line.strip()})
+            i += 1
 
-good = [line["idx"] for line in lines if myfilter(line)]
-print(len(good))
+    good = [line["idx"] for line in lines if myfilter(line)]
+    print(len(good))
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

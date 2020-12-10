@@ -1,3 +1,6 @@
+import sys
+
+
 def do_recurse(check_value, lines):
     bags = [line[1] for line in lines if check_value in line[0]]
     bags = bags.pop()
@@ -25,4 +28,5 @@ def main():
     print(ans["count"])
 
 
-main()
+if __name__ == "__main__":
+    main(sys.argv[1:])

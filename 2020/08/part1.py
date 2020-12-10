@@ -1,3 +1,6 @@
+import sys
+
+
 def create_data(data):
     oper, val = data.replace("+", "").split(" ")
     return {"op": oper, "amt": int(val), "seen": False}
@@ -28,4 +31,5 @@ def main():
     print(ans)
 
 
-main()
+if __name__ == "__main__":
+    main(sys.argv[1:])

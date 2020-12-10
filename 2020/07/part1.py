@@ -1,3 +1,6 @@
+import sys
+
+
 def do_recurse(check_value, lines, poss_bags):
     bags = [line[0] for line in lines if check_value in line[1]]
     poss_bags.update(set(bags))
@@ -19,4 +22,5 @@ def main():
     print(len(poss_bags))
 
 
-main()
+if __name__ == "__main__":
+    main(sys.argv[1:])

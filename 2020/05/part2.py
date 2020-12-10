@@ -1,3 +1,5 @@
+import sys
+
 ROWS = 127
 COLS = 7
 
@@ -41,4 +43,5 @@ def main():
     print(res)
 
 
-main()
+if __name__ == "__main__":
+    main(sys.argv[1:])

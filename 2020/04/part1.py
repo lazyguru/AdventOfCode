@@ -1,3 +1,6 @@
+import sys
+
+
 def is_valid(passport):
     count = [1 for field in fields if field in passport]
     return len(count) == len(fields)
@@ -34,4 +37,6 @@ fields = [
     "pid",  # (Passport ID)
 ]
 
-main()
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

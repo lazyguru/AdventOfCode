@@ -1,3 +1,6 @@
+import sys
+
+
 def reset_seen(data):
     data["seen"] = False
     return data
@@ -53,4 +56,5 @@ def main():
             return
 
 
-main()
+if __name__ == "__main__":
+    main(sys.argv[1:])
