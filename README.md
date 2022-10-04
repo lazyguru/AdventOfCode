@@ -23,8 +23,13 @@ attempted to solve.  Each year's code will be in a separate directory named afte
 the year. Inside each year folder is a folder for each corresponding day.
 
 * 2020 - Attempted using Python
+* 2021 - Attempted (after the fact) using Go
 
 [aoc]: https://adventofcode.com/
+
+## Utilities
+* `go install github.com/GreenLightning/advent-of-code-downloader/aocdl@latest`
+* See `aoc` script
 
 ## License
 
