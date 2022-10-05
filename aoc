@@ -5,6 +5,7 @@ PART=$2
 WAIT=$3
 MYDIR=~/code/AdventOfCode
 USE_CODE=go
+MYEDITOR=code
 if [ -z $DAY ]; then
     DAY=`TZ=America/New_York date +%d`
 fi
@@ -85,8 +86,12 @@ part2
 EOF
     fi
 fi
-tmux new -d -s aoc$YEAR$DAY -x "$(tput cols)" -y "$(tput lines)" "$DOWNLOAD_SCRIPT nvim input.txt"
-tmux split-window -t aoc$YEAR$DAY -h -p 80
-tmux split-window -t aoc$YEAR$DAY -bp 70 nvim -p puzzle.txt part$PART.$USE_CODE
+if [ "$MYEDITOR" == "nvim" ]; then
+    tmux new -d -s aoc$YEAR$DAY -x "$(tput cols)" -y "$(tput lines)" "$DOWNLOAD_SCRIPT nvim input.txt"
+    tmux split-window -t aoc$YEAR$DAY -h -p 80
+    tmux split-window -t aoc$YEAR$DAY -bp 70 nvim -p puzzle.txt part$PART.$USE_CODE
+    tmux attach -t aoc$YEAR$DAY
+else
+    $MYEDITOR .
+fi
 
-tmux attach -t aoc$YEAR$DAY
