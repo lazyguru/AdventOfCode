@@ -1,3 +1,4 @@
+import os
 import sys
 import getopt
 import requests
@@ -34,9 +35,7 @@ def main(argv):
         blocker()
     body = requests.get(
         f"https://adventofcode.com/{year}/day/{day}",
-        cookies={
-            "session": "53616c7465645f5f5d35af4c2ac952f04d3168219c7f761b9975bbeb44b44f665617f224428db73dcbd41ca1707ea0b2"
-        },
+        cookies={"session": os.environ.get("AOC_SESSION")},
     )
     html = soup(body.content, "html.parser")
     articles = html.body.main.find_all("article")

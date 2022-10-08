@@ -28,6 +28,7 @@ if [ ! -e venv ]; then
 else
     source venv/bin/activate
 fi
+export AOC_SESSION=`cat ~/.aocdlconfig|jq -r '.["session-cookie"]'`
 python scrape.py -y $YEAR -d $DAY -o ../$YEAR/$DAY/puzzle.txt
 deactivate
 cd $MYDIR/$YEAR/$DAY
