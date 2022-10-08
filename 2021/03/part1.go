@@ -17,14 +17,7 @@ func main() {
 	epsilon := 0
 	idx := 0
 	for idx < cols {
-		cnt0 := 0
-		for _, value := range data {
-			bits := strings.Split(value, "")
-			if bits[idx] == "0" {
-				cnt0++
-			}
-		}
-		cnt1 := len(data) - cnt0
+		cnt0, cnt1 := countBits(data, idx)
 		gamma *= 2
 		epsilon *= 2
 		if cnt0 < cnt1 {
