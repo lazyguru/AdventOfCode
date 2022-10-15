@@ -3,24 +3,24 @@ YEAR=2021
 DAY=$1
 PART=$2
 WAIT=$3
-MYDIR=~/code/AdventOfCode
+MYDIR="$HOME/code/AdventOfCode"
 USE_CODE=go
 MYEDITOR=code
-if [ -z $DAY ]; then
-    DAY=`TZ=America/New_York date +%d`
+if [ -z "$DAY" ]; then
+    DAY=$(TZ=America/New_York date +%d)
 fi
-if [ -z $PART ]; then
+if [ -z "$PART" ]; then
     PART=1
 fi
-if [ ! -z $WAIT ]; then
-    WAIT=" -wait"
+if [ -n "$WAIT" ]; then
+    WAIT="-wait"
 fi
 # Get aocdl from https://github.com/GreenLightning/advent-of-code-downloader
-DOWNLOAD_SCRIPT="~/go/bin/aocdl -year $YEAR -day $DAY$WAIT &&"
-if [ ! -d $MYDIR/$YEAR/$DAY ]; then
-    mkdir -p $MYDIR/$YEAR/$DAY
+DOWNLOAD_SCRIPT="$HOME/go/bin/aocdl -year $YEAR -day $DAY $WAIT"
+if [ ! -d "$MYDIR/$YEAR/$DAY" ]; then
+    mkdir -p "$MYDIR/$YEAR/$DAY"
 fi
-cd $MYDIR/utils
+cd $MYDIR/utils || exit 1
 if [ ! -e venv ]; then
     python3 -m venv venv
     source venv/bin/activate
@@ -28,71 +28,25 @@ if [ ! -e venv ]; then
 else
     source venv/bin/activate
 fi
-export AOC_SESSION=`cat ~/.aocdlconfig|jq -r '.["session-cookie"]'`
-python scrape.py -y $YEAR -d $DAY -o ../$YEAR/$DAY/puzzle.txt
+python scrape.py -y "$YEAR" -d "$DAY" -o "../$YEAR/$DAY/puzzle.txt"
 deactivate
-cd $MYDIR/$YEAR/$DAY
+cd "$MYDIR/$YEAR/$DAY" || exit 1
 if [ "$USE_CODE" == "py" ]; then
     if [ ! -e part1.py ]; then
-        cat<<EOF > part1.py
-import sys
-
-
-def myfilter(data):
-    return False
-
-lines = []
-with open("input.txt") as input_file:
-    lines = [line for line in input_file]
-
-good = [1 for line in lines if myfilter(line)]
-print(len(good))
-EOF
-        cp part1.py part2.py
+        cp -R ../template/*.py ./
     fi
 elif [ "$USE_CODE" == "go" ]; then
     if [ ! -e part1.go ]; then
-        go mod init github.com/lazyguru/AdventOfCode/$YEAR/$DAY
-        cat<<EOF > part1.go
-package main
-
-import (
-	"log"
-	"os"
-	"strings"
-)
-
-func main() {
-	content, err := os.ReadFile("input.txt")
-	if err != nil {
-		log.Fatal("Error when opening input file: ", err)
-	}
-	data := strings.Split(string(content), "\n")
-	cnt := 0
-	for _, value := range data {
-		if value == "" {
-			continue
-		}
-		cnt++
-	}
-	log.Printf("Final count: %d\n", cnt)
-}
-EOF
-        cp part1.go part2.go
-        cat<<EOF > .gitignore
-part1
-!part1.go
-part2
-!part2.go
-EOF
+        go mod init "github.com/lazyguru/AdventOfCode/$YEAR/$DAY"
+        cp -R ../template/*.go ./
     fi
 fi
 if [ "$MYEDITOR" == "nvim" ]; then
-    tmux new -d -s aoc$YEAR$DAY -x "$(tput cols)" -y "$(tput lines)" "$DOWNLOAD_SCRIPT nvim input.txt"
-    tmux split-window -t aoc$YEAR$DAY -h -p 80
-    tmux split-window -t aoc$YEAR$DAY -bp 70 nvim -p puzzle.txt part$PART.$USE_CODE
-    tmux attach -t aoc$YEAR$DAY
+    tmux new -d -s "aoc$YEAR$DAY" -x "$(tput cols)" -y "$(tput lines)" "$AOC_SESSION $DOWNLOAD_SCRIPT nvim input.txt"
+    tmux split-window -t "aoc$YEAR$DAY" -h -p 80
+    tmux split-window -t "aoc$YEAR$DAY" -bp 70 nvim -p puzzle.txt part$PART.$USE_CODE
+    tmux attach -t "aoc$YEAR$DAY"
 else
+    $DOWNLOAD_SCRIPT
     $MYEDITOR .
 fi
-
