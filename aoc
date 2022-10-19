@@ -5,7 +5,7 @@ PART=$2
 WAIT=$3
 MYDIR="$HOME/code/AdventOfCode"
 USE_CODE=go
-MYEDITOR=code
+MYEDITOR=goland
 if [ -z "$DAY" ]; then
     DAY=$(TZ=America/New_York date +%d)
 fi
@@ -41,6 +41,7 @@ elif [ "$USE_CODE" == "go" ]; then
         cp -R ../template/*.go ./
     fi
 fi
+cp -R ../template/.gitignore ./
 if [ "$MYEDITOR" == "nvim" ]; then
     tmux new -d -s "aoc$YEAR$DAY" -x "$(tput cols)" -y "$(tput lines)" "$AOC_SESSION $DOWNLOAD_SCRIPT nvim input.txt"
     tmux split-window -t "aoc$YEAR$DAY" -h -p 80
