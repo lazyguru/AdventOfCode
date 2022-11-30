@@ -24,6 +24,7 @@ the year. Inside each year folder is a folder for each corresponding day.
 
 * 2020 - Attempted using Python
 * 2021 - Attempted (after the fact) using Go
+* 2022 - Attempted using Go
 
 [aoc]: https://adventofcode.com/
 

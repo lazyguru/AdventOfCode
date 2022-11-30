@@ -1,5 +1,5 @@
 #!/bin/bash
-YEAR=2021
+YEAR=2022
 DAY=$1
 PART=$2
 WAIT=$3
