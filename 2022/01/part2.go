@@ -7,8 +7,7 @@ import (
 	"strings"
 )
 
-func part2() {
-	chunks := ReadFile()
+func part2(chunks []string) {
 	elves := make(map[int]int)
 	keys := make([]int, 0, len(elves))
 	for idx, chunk := range chunks {

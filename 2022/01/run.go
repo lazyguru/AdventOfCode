@@ -15,8 +15,10 @@ func ReadFile() []string {
 }
 
 func main() {
+	log.Println("Reading file")
+	data := ReadFile()
 	log.Println("Running part 1")
-	part1()
+	part1(data)
 	log.Println("Running part 2")
-	part2()
+	part2(data)
 }
