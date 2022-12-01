@@ -16,7 +16,7 @@ if [ -n "$WAIT" ]; then
     WAIT="-wait"
 fi
 # Get aocdl from https://github.com/GreenLightning/advent-of-code-downloader
-DOWNLOAD_SCRIPT="$HOME/go/bin/aocdl -year $YEAR -day $DAY $WAIT"
+DOWNLOAD_SCRIPT="$HOME/go/bin/aocdl -year $YEAR -day $DAY -force $WAIT"
 if [ ! -d "$MYDIR/$YEAR/$DAY" ]; then
     mkdir -p "$MYDIR/$YEAR/$DAY"
 fi
@@ -28,6 +28,7 @@ if [ ! -e venv ]; then
 else
     source venv/bin/activate
 fi
+export AOC_SESSION=`cat ~/.aocdlconfig|jq -r '.["session-cookie"]'`
 python scrape.py -y "$YEAR" -d "$DAY" -o "../$YEAR/$DAY/puzzle.txt"
 deactivate
 cd "$MYDIR/$YEAR/$DAY" || exit 1
