@@ -4,9 +4,8 @@ import (
 	"log"
 )
 
-func part2() {
+func part2(data []string) {
 	cnt := 0
-	data := ReadFile()
 	for _, value := range data {
 		if value == "" {
 			continue

@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func ReadFile() []string {
-	content, err := os.ReadFile("input.txt")
+func ReadFile(filename string) []string {
+	content, err := os.ReadFile(filename)
 	if err != nil {
 		log.Fatal("Error when opening input file: ", err)
 	}
@@ -15,10 +15,14 @@ func ReadFile() []string {
 }
 
 func main() {
-	log.Println("Reading file")
-	data := ReadFile()
+	filename := "input.txt"
+	if len(os.Args) == 2 {
+		filename = os.Args[1]
+	}
+	log.Printf("Reading file: %s\n", filename)
+	content := ReadFile(filename)
 	log.Println("Running part 1")
-	part1(data)
+	part1(content)
 	log.Println("Running part 2")
-	part2(data)
+	part2(content)
 }
