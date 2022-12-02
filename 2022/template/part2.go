@@ -5,12 +5,12 @@ import (
 )
 
 func part2(data []string) {
-	cnt := 0
+	answer := 0
 	for _, value := range data {
 		if value == "" {
 			continue
 		}
-		cnt++
+		answer++
 	}
-	log.Printf("Final count: %d\n", cnt)
+	log.Printf("Answer: %d\n", answer)
 }
