@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"github.com/lazyguru/AdventOfCode/utils/pkg/download"
+	"github.com/lazyguru/AdventOfCode/utils/pkg/submit"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -71,7 +72,7 @@ var submitCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-
+		submit.SubmitAnswer(year, day, part, answer)
 	},
 }
 
