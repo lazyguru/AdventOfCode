@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"github.com/lazyguru/AdventOfCode/utils/pkg/download"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -34,7 +35,7 @@ var downloadCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-
+		download.SetupPuzzle(year, day, part)
 	},
 }
 
@@ -78,7 +79,7 @@ func main() {
 	rootCmd.PersistentFlags().IntVarP(&year, "year", "y", 0, "year input")
 	rootCmd.PersistentFlags().IntVarP(&day, "day", "d", 0, "day input")
 	rootCmd.PersistentFlags().IntVarP(&part, "part", "p", 0, "part input")
-	rootCmd.PersistentFlags().StringVarP(&answer, "answer", "p", "", "answer input")
+	rootCmd.PersistentFlags().StringVarP(&answer, "answer", "a", "", "answer input")
 
 	rootCmd.AddCommand(downloadCmd)
 	rootCmd.AddCommand(submitCmd)
