@@ -22,7 +22,10 @@ func main() {
 	log.Printf("Reading file: %s\n", filename)
 	content := ReadFile(filename)
 	log.Println("Running part 1")
-	part1(content)
+	ans1 := part1(content)
+	log.Printf("Part1: %d\n", ans1)
 	log.Println("Running part 2")
-	part2(content)
+	ans2 := part2(content)
+	log.Printf("Part2: %d\n", ans2)
+
 }

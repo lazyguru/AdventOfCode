@@ -1,17 +1,12 @@
 package main
 
-import (
-	"log"
-)
-
-func part2() {
-	cnt := 0
-	data := ReadFile()
+func part2(data []string) int {
+	answer := 0
 	for _, value := range data {
 		if value == "" {
 			continue
 		}
-		cnt++
+		answer++
 	}
-	log.Printf("Final count: %d\n", cnt)
+	return answer
 }
