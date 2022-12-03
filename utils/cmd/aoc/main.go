@@ -23,9 +23,7 @@ var downloadCmd = &cobra.Command{
 		}
 		if day <= 0 {
 			if time.Now().Month() == 12 {
-				day = time.Now().Day()
-			} else if time.Now().Month() == 11 && time.Now().Day() == 30 {
-				day = 1
+				day = getToday()
 			} else {
 				return errors.New("invalid day")
 			}
@@ -56,9 +54,7 @@ var submitCmd = &cobra.Command{
 		}
 		if day <= 0 {
 			if time.Now().Month() == 12 {
-				day = time.Now().Day()
-			} else if time.Now().Month() == 11 && time.Now().Day() == 30 {
-				day = 1
+				day = getToday()
 			} else {
 				return errors.New("invalid day")
 			}
@@ -74,6 +70,11 @@ var submitCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		submit.SubmitAnswer(year, day, part, answer)
 	},
+}
+
+func getToday() int {
+	location, _ := time.LoadLocation("America/New_York")
+	return time.Now().In(location).Day()
 }
 
 func main() {
