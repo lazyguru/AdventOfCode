@@ -22,6 +22,7 @@ This repository contains the code that `lazyguru` came up with for the puzzles h
 attempted to solve.  Each year's code will be in a separate directory named after
 the year. Inside each year folder is a folder for each corresponding day.
 
+* 2019 - Attempted (after the fact) using Go
 * 2020 - Attempted using Python
 * 2021 - Attempted (after the fact) using Go
 * 2022 - Attempted using Go
