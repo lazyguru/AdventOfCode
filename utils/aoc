@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ -e utils ]; then
+    cd utils
+fi
+go build -o ../bin/aoc ./cmd/aoc/main.go
+if [ ! -e utils ]; then
+    cd ..
+fi
+./bin/aoc $@
