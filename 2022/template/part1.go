@@ -1,10 +1,6 @@
 package main
 
-import (
-	"log"
-)
-
-func part1(data []string) {
+func part1(data []string) int {
 	answer := 0
 	for _, value := range data {
 		if value == "" {
@@ -12,5 +8,5 @@ func part1(data []string) {
 		}
 		answer++
 	}
-	log.Printf("Answer: %d\n", answer)
+	return answer
 }
