@@ -2,7 +2,6 @@
 YEAR=2022
 DAY=$1
 PART=$2
-WAIT=$3
 MYDIR="$HOME/code/AdventOfCode"
 USE_CODE=go
 MYEDITOR=goland
@@ -12,25 +11,14 @@ fi
 if [ -z "$PART" ]; then
     PART=1
 fi
-if [ -n "$WAIT" ]; then
-    WAIT="-wait"
-fi
 # Get aocdl from https://github.com/GreenLightning/advent-of-code-downloader
-DOWNLOAD_SCRIPT="$HOME/go/bin/aocdl -year $YEAR -day $DAY -force $WAIT"
-if [ ! -d "$MYDIR/$YEAR/$DAY" ]; then
-    mkdir -p "$MYDIR/$YEAR/$DAY"
-fi
-cd $MYDIR/utils || exit 1
-if [ ! -e venv ]; then
-    python3 -m venv venv
-    source venv/bin/activate
-    pip3 install -r requirements.txt
-else
-    source venv/bin/activate
-fi
 export AOC_SESSION=`cat ~/.aocdlconfig|jq -r '.["session-cookie"]'`
-python scrape.py -y "$YEAR" -d "$DAY" -o "../$YEAR/$DAY/puzzle.txt"
-deactivate
+if [ ! -e utils/aoc ]; then
+    cd utils
+    go build -o aoc ./cmd/aoc/main.go
+    cd ..
+fi
+./utils/aoc download -y $YEAR -d $DAY -p $PART
 cd "$MYDIR/$YEAR/$DAY" || exit 1
 if [ "$USE_CODE" == "py" ]; then
     if [ ! -e part1.py ]; then
@@ -44,11 +32,10 @@ elif [ "$USE_CODE" == "go" ]; then
 fi
 cp -R ../template/.gitignore ./
 if [ "$MYEDITOR" == "nvim" ]; then
-    tmux new -d -s "aoc$YEAR$DAY" -x "$(tput cols)" -y "$(tput lines)" "$AOC_SESSION $DOWNLOAD_SCRIPT nvim input.txt"
+    tmux new -d -s "aoc$YEAR$DAY" -x "$(tput cols)" -y "$(tput lines)" "nvim input.txt"
     tmux split-window -t "aoc$YEAR$DAY" -h -p 80
     tmux split-window -t "aoc$YEAR$DAY" -bp 70 nvim -p puzzle.txt part$PART.$USE_CODE
     tmux attach -t "aoc$YEAR$DAY"
 else
-    $DOWNLOAD_SCRIPT
     $MYEDITOR .
 fi
