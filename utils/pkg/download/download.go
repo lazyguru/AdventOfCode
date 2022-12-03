@@ -38,15 +38,20 @@ func downloadInput(year, day int) {
 
 func writeFile(filename string, body string) {
 	f := getFile(filename)
-	defer f.Close()
-	f.WriteString(body)
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+			log.Fatal("Error closing file", err)
+		}
+	}(f)
+	_, err := f.WriteString(body)
+	if err != nil {
+		log.Fatal("Error writing to file", err)
+	}
 }
 
 func getFile(filename string) *os.File {
-	if _, err := os.Stat(filename); err == nil || !errors.Is(err, os.ErrNotExist) {
-		log.Fatalf("File already exists: %s", filename)
-	}
-	f, err := os.Create(filename)
+	f, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
