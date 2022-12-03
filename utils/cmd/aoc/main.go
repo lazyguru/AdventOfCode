@@ -46,8 +46,8 @@ var rootCmd = &cobra.Command{
 
 var submitCmd = &cobra.Command{
 	Use:   "submit",
-	Short: "Submit an answer for a given puzzle part",
-	Long:  "",
+	Short: "Submit an answer",
+	Long:  "Submit an answer for a given year, day, and part",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if year <= 0 {
 			year = time.Now().Year()
