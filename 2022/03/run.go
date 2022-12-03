@@ -14,7 +14,14 @@ func ReadFile(filename string) []string {
 	return strings.Split(string(content), "\n")
 }
 
-var priorities map[string]int
+func convertToPriority(match string) int {
+	code := int([]rune(match)[0])
+	if code > 96 {
+		return code - 96
+	} else {
+		return code - 38
+	}
+}
 
 func main() {
 	filename := "input.txt"
@@ -23,11 +30,6 @@ func main() {
 	}
 	log.Printf("Reading file: %s\n", filename)
 	content := ReadFile(filename)
-	priorities = make(map[string]int)
-	alpha := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	for idx, _ := range alpha {
-		priorities[string(alpha[idx])] = idx + 1
-	}
 	log.Println("Running part 1")
 	ans1 := part1(content)
 	log.Printf("Part1: %d\n", ans1)

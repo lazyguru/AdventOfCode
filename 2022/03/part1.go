@@ -17,7 +17,7 @@ func part1(data []string) int {
 		for idx, _ := range half1 {
 			if strings.Contains(half2, string(half1[idx])) {
 				match = string(half1[idx])
-				answer += priorities[match]
+				answer += convertToPriority(match)
 				break
 			}
 		}

@@ -18,7 +18,7 @@ func part2(data []string) int {
 			if strings.Contains(row2, string(row1[idx])) &&
 				strings.Contains(row3, string(row1[idx])) {
 				match = string(row1[idx])
-				answer += priorities[match]
+				answer += convertToPriority(match)
 				break
 			}
 		}
