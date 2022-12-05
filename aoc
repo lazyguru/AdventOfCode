@@ -19,6 +19,9 @@ if [ ! -e utils/aoc ]; then
     cd ..
 fi
 ./utils/aoc download -y $YEAR -d $DAY -p $PART
+if [ $DAY -lt 10 ];then
+    DAY=`printf "%02d" $DAY`
+fi
 cd "$MYDIR/$YEAR/$DAY" || exit 1
 if [ "$USE_CODE" == "py" ]; then
     if [ ! -e part1.py ]; then
