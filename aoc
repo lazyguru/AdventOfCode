@@ -39,7 +39,6 @@ fi
 if [ -z "$PART" ]; then
     PART=1
 fi
-# Get aocdl from https://github.com/GreenLightning/advent-of-code-downloader
 export AOC_SESSION=`cat ~/.aocdlconfig|jq -r '.["session-cookie"]'`
 cd $MYDIR
 if [ ! -e utils/aoc ]; then
