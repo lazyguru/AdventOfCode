@@ -1,10 +1,38 @@
 #!/bin/bash
-YEAR=2022
-DAY=$1
-PART=$2
-MYDIR="$HOME/code/AdventOfCode"
+MYDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+usage() {
+    echo "Usage: $0 [-y <2016-Current year>] [-d <1-25>] [-p <1|2>]" 1>&2
+    exit 1
+}
+
+while getopts ":y:d:p:" o; do
+    case "${o}" in
+        y)
+            y=${OPTARG}
+            ((y >= 2016)) || usage
+            YEAR=${y}
+            ;;
+        d)
+            d=${OPTARG}
+            ((d >= 1 && d <= 25)) || usage
+            DAY=${d}
+            ;;
+        p)
+            p=${OPTARG}
+            ((p == 1 || p == 2)) || usage
+            PART=${p}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
 USE_CODE=go
 MYEDITOR=goland
+if [ -z "$YEAR" ]; then
+    YEAR=$(TZ=America/New_York date +%Y)
+fi
 if [ -z "$DAY" ]; then
     DAY=$(TZ=America/New_York date +%d)
 fi
@@ -13,6 +41,7 @@ if [ -z "$PART" ]; then
 fi
 # Get aocdl from https://github.com/GreenLightning/advent-of-code-downloader
 export AOC_SESSION=`cat ~/.aocdlconfig|jq -r '.["session-cookie"]'`
+cd $MYDIR
 if [ ! -e utils/aoc ]; then
     cd utils
     go build -o aoc ./cmd/aoc/main.go
@@ -42,3 +71,4 @@ if [ "$MYEDITOR" == "nvim" ]; then
 else
     $MYEDITOR .
 fi
+cd -
