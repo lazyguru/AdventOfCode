@@ -19,10 +19,10 @@ var downloadCmd = &cobra.Command{
 	Long:  "Get a puzzle from year, day, and part inputs",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if year <= 0 {
-			year = time.Now().Year()
+			year = getNow().Year()
 		}
 		if day <= 0 {
-			if time.Now().Month() == 12 {
+			if getNow().Month() == 12 {
 				day = getToday()
 			} else {
 				return errors.New("invalid day")
@@ -50,10 +50,10 @@ var submitCmd = &cobra.Command{
 	Long:  "Submit an answer for a given year, day, and part",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if year <= 0 {
-			year = time.Now().Year()
+			year = getNow().Year()
 		}
 		if day <= 0 {
-			if time.Now().Month() == 12 {
+			if getNow().Month() == 12 {
 				day = getToday()
 			} else {
 				return errors.New("invalid day")
@@ -70,6 +70,11 @@ var submitCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		submit.SubmitAnswer(year, day, part, answer)
 	},
+}
+
+func getNow() time.Time {
+	location, _ := time.LoadLocation("America/New_York")
+	return time.Now().In(location)
 }
 
 func getToday() int {
