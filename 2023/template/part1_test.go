@@ -7,6 +7,6 @@ func TestPart1(t *testing.T) {
 	exampleData := []string{}
 	ans := part1(exampleData)
 	if ans != expectedAnswer {
-		t.Errorf("part2() = %d, want %d", ans, expectedAnswer)
+		t.Errorf("part1() = %d, want %d", ans, expectedAnswer)
 	}
 }
