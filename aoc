@@ -64,9 +64,9 @@ fi
 cp -R ../template/.gitignore ./
 if [ "$MYEDITOR" == "nvim" ]; then
     tmux new -d -s "aoc$YEAR$DAY" -x "$(tput cols)" -y "$(tput lines)" "nvim input.txt"
-    tmux split-window -t "aoc$YEAR$DAY" -h -p 80
-    tmux split-window -t "aoc$YEAR$DAY" -bp 70 nvim -p puzzle.txt part$PART.$USE_CODE
-    tmux attach -t "aoc$YEAR$DAY"
+    tmux split-window -t "aoc${YEAR}${DAY}" -h -p 80
+    tmux split-window -t "aoc${YEAR}${DAY}" -bp 70 nvim -p puzzle.md part${PART}.${USE_CODE} part${PART}_test.${USE_CODE}
+    tmux attach -t "aoc${YEAR}${DAY}"
 else
     $MYEDITOR .
 fi
