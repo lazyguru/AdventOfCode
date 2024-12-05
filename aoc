@@ -29,7 +29,7 @@ while getopts ":y:d:p:" o; do
 done
 shift $((OPTIND-1))
 USE_CODE=go
-MYEDITOR=goland
+MYEDITOR=nvim
 if [ -z "$YEAR" ]; then
     YEAR=$(TZ=America/New_York date +%Y)
 fi
